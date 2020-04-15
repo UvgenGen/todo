@@ -1,0 +1,48 @@
+{% load static %}
+<html>
+    <header>
+        <link href="{% static 'css/message.css' %}" rel="stylesheet" type="text/css" />
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{% static 'js/message.js' %}"></script>
+    </header>
+    <body>
+        <div id="todo">
+            <div class="block-left">
+            <form id="message_form">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    {{ form.text.errors }}
+                    <label for="{{ form.text.id_for_label }}">Text</label>
+                    {{ form.text }}
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.text_color.errors }}
+                    <label for="{{ form.text_color.id_for_label }}">Text color</label>
+                    {{ form.text_color }}
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.bg_color.errors }}
+                    <label for="{{ form.bg_color.id_for_label }}">Background color</label>
+                    {{ form.bg_color }}
+                </div>
+                <button id='save_message'>Save</button>
+            </form>
+            </div>
+            <div class="block-right">
+                <h3>Messages</h3>
+                <div id="todo-list">
+                    
+                    {% for message in messages %}
+                        <div class="message" style="color: {{message.text_color}}; background-color: {{message.bg_color}}">
+                            {{ message.text }}
+                            <button data-id='{{message.id}}' class="delete_message">x</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
